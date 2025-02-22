@@ -1,0 +1,464 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background: #0a0f13;
+  font-family: "poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-over {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+  z-index: 1;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0 0, 0, 0.9);
+
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.gameOver.show {
+  opacity: 1; /* Suavemente aparece */
+}
+
+.container-board {
+  height: 90vh;
+  width: 80vw;
+  background: #161e22;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 15px;
+}
+
+.bet-settings {
+  width: 100%;
+  height: 100%;
+  border-right: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.value-money {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 66.4% 15% 15%;
+  gap: 5px;
+  position: relative;
+}
+
+.dimas-minas {
+  margin-top: 15px;
+}
+
+.value-money > input,
+.quantily-mines > select,
+.dimas > input,
+.mines > input {
+  padding: 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #0a0f13;
+  outline: none;
+  color: white; /* Para garantir que o texto fique visível */
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.dimas > input,
+.mines > input {
+  pointer-events: none;
+  width: 100%;
+}
+
+/* Remove a seta padrão do select (somente para Webkit e Firefox) */
+.quantily-mines > select {
+  appearance: none; /* Remove o estilo padrão */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+}
+
+/* Adiciona um ícone de seta manualmente */
+.quantily-mines {
+  position: relative;
+}
+
+.quantily-mines::after {
+  content: "▼"; /* Ícone da seta */
+  font-size: 14px;
+  color: white;
+  position: absolute;
+  right: 15px;
+  top: 65%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.inputs-multiplicator {
+  width: 100%;
+  display: none;
+}
+
+.next-multiplique,
+.multiplique-atualy {
+  padding: 15px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  background-color: #0a0f13;
+  outline: none;
+
+  pointer-events: none;
+}
+
+.label-multiplique,
+.mines,
+.dimas {
+  font-size: 0.6rem;
+}
+
+.value-money > label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+
+  transition: 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.value-money input:focus + label,
+.value-money input:not(:placeholder-shown) + label {
+  top: 20%;
+  font-size: 0.5rem;
+  color: #aaa;
+  padding: 0 5px;
+}
+
+.btn-half-value,
+.btn-double-value {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #fff;
+
+  border-radius: 6px;
+  background-color: transparent;
+  font-size: 0.6rem;
+  cursor: pointer;
+}
+
+.btn-half-value:hover,
+.btn-double-value:hover {
+  background-color: #0a0f13;
+  transition: 0.2s ease-in;
+}
+
+.quantily-mines {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.quantily-mines > label {
+  font-size: 0.6rem;
+}
+
+.dimas-minas {
+  display: none;
+  gap: 10px;
+}
+
+.mines,
+.dimas {
+  gap: 10px;
+}
+
+.start-game,
+.cash-out,
+.game-over > button {
+  width: 100%;
+  max-width: 40vw;
+  padding: 13px;
+  border-radius: 6px;
+  border: none;
+  background-color: rgb(161, 27, 27);
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.start-game,
+.cash-out {
+  position: absolute;
+}
+
+.start-game:hover,
+.start-game:disabled,
+.game-over > button:hover {
+  opacity: 0.6;
+  transition: 0.2s ease-in-out;
+}
+
+.settings {
+  display: flex;
+  gap: 10px;
+}
+
+.p-money {
+  font-size: 1.6rem;
+  font-weight: bold;
+  position: fixed;
+  top: 0;
+  left: 5px;
+}
+
+.icon {
+  border: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.6rem;
+  padding: 8px;
+  position: relative;
+}
+
+.volume {
+  display: none;
+}
+
+#mute {
+  display: none;
+}
+
+.box-game-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Ocupa toda a largura disponível */
+  height: 100%; /* Mantém a altura proporcional */
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+  grid-template-rows: repeat(5, 1fr); /* 5 linhas */
+  gap: 8px;
+}
+
+.cell {
+  background-color: #0a0f13; /* Cor do fundo das células */
+  border: 1px solid #fff; /* Bordas para separar as células */
+  width: 7vw; /* Ajusta automaticamente dentro do grid */
+  aspect-ratio: 1 / 1; /* Mantém as células quadradas */
+  cursor: pointer;
+  transition: background 0.2s ease-in;
+  transform-style: preserve-3d; /* Permite o efeito 3D */
+}
+
+.cell:hover {
+  background-color: rgb(161, 27, 27);
+}
+
+/* Frente da célula (o que o jogador vê antes de clicar) */
+.cell::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* Ocupa toda a célula */
+
+  backface-visibility: hidden; /* Esconde quando a célula vira */
+  border-radius: 6px;
+}
+
+/* Verso da célula (o que aparece quando vira) */
+.cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  backface-visibility: hidden;
+  transform: rotateY(180deg); /* Fica virado de costas até ser revelado */
+}
+
+/* 🔄 Efeito de virar quando clicado */
+.cell.revealed {
+  transform: rotateY(180deg);
+}
+
+/* 💣 Mostra a bomba quando revelado */
+.cell.bomb::after {
+  background-image: url("./assets/bomb.png");
+}
+
+/* 💎 Mostra o diamante quando revelado */
+.cell.diamond::after {
+  background-image: url("./assets/diamond.png");
+}
+
+@media screen and (max-width: 1024px) {
+  /* Tablets */
+  .container-board {
+    width: 90vw;
+    height: 85vh;
+    grid-template-columns: 1fr 1.5fr;
+    padding: 10px;
+  }
+
+  .game-board {
+    gap: 6px;
+  }
+
+  .cell {
+    width: 8vw;
+  }
+
+  .bet-settings {
+    padding: 5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Celulares grandes */
+  .container-board {
+    width: 96vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .bet-settings {
+    display: flex;
+    overflow-y: auto;
+    border: none;
+  }
+
+  .bet-settings::-webkit-scrollbar {
+    width: 3px; /* Largura da barra de rolagem */
+  }
+
+  .bet-settings::-webkit-scrollbar-track {
+    background: #111; /* Cor de fundo da barra de rolagem */
+    border-radius: 10px;
+  }
+
+  .bet-settings::-webkit-scrollbar-thumb {
+    background: #222; /* Cor da barra */
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+
+  .bet-settings::-webkit-scrollbar-thumb:hover {
+    background: #333; /* Cor ao passar o mouse */
+  }
+
+  .value-money > input,
+  .quantily-mines > select,
+  .dimas > input,
+  .mines > input {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0a0f13;
+    outline: none;
+    color: white; /* Para garantir que o texto fique visível */
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  .start-game {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
+  }
+
+  .game-board {
+    gap: 3px;
+  }
+
+  .cell {
+    width: 7vw;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container-board {
+    width: 96vw;
+    height: 88vh;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .bet-settings {
+    border: none;
+  }
+
+  .bet-settings::-webkit-scrollbar {
+    width: 2px; /* Largura da barra de rolagem */
+  }
+
+  .bet-settings::-webkit-scrollbar-track {
+    background: #111; /* Cor de fundo da barra de rolagem */
+    border-radius: 10px;
+  }
+
+  .bet-settings::-webkit-scrollbar-thumb {
+    background: #222; /* Cor da barra */
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+
+  .bet-settings::-webkit-scrollbar-thumb:hover {
+    background: #333; /* Cor ao passar o mouse */
+  }
+
+  .value-money > input,
+  .quantily-mines > select,
+  .dimas > input,
+  .mines > input {
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0a0f13;
+    outline: none;
+    color: white; /* Para garantir que o texto fique visível */
+    font-size: 13px;
+    cursor: pointer;
+    overflow-y: auto;
+  }
+
+  .start-game,
+  .cash-out {
+    position: relative;
+
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
+  }
+
+  .game-board {
+    gap: 5px;
+  }
+
+  .cell {
+    width: 14vw;
+  }
+}

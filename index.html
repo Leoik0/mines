@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/b96c3df9f6.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./script.js" defer></script>
+    <title>Mine</title>
+  </head>
+  <body>
+    <div class="game-over">
+      <p>Fim de jogo! você perdeu<span></span></p>
+      <button class="btn-again">Tente Novamente</button>
+    </div>
+    <div class="container-board">
+      <div class="bet-settings">
+        <div class="values-settings">
+          <div class="value-money">
+            <input
+              class="input-quantily-money"
+              type="number"
+              id="input"
+              min="1"
+              value="1"
+              placeholder=""
+            />
+            <label for="input">Quantidade</label>
+            <button class="btn-half-value">1/2</button>
+            <button class="btn-double-value">2x</button>
+          </div>
+
+          <div class="inputs-multiplicator">
+            <div>
+              <label class="label-multiplique" for="">
+                multiplicador atual</label
+              >
+              <input class="multiplique-atualy" type="text" />
+            </div>
+            <div>
+              <label class="label-multiplique" for=""
+                >próximo multiplicador</label
+              >
+              <input class="next-multiplique" type="text" />
+            </div>
+          </div>
+
+          <div class="quantily-mines">
+            <label for="mines">Número de minas</label>
+            <select
+              class="input-quantily-mine"
+              value="2"
+              name="mines"
+              id=""
+            ></select>
+          </div>
+
+          <div class="dimas-minas">
+            <div class="mines">
+              <label for="mines">Minas</label>
+              <input class="input-mines" type="text" />
+            </div>
+            <div class="dimas">
+              <label for="dimas">Dimas</label>
+              <input class="input-dimas" type="text" />
+            </div>
+          </div>
+
+          <div style="position: relative">
+            <button style="display: none" class="cash-out">
+              Retirar <span class="value-cash"></span> BRL
+            </button>
+            <button class="start-game">Começar o jogo</button>
+          </div>
+        </div>
+
+        <div class="settings">
+          <div class="icon volume">
+            <i id="ative" class="fa-solid fa-volume-high ative"></i
+            ><i id="mute" class="fa-solid fa-volume-xmark mute"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-game-board">
+        <div class="game-board"></div>
+      </div>
+      <p class="p-money">R$</p>
+    </div>
+  </body>
+</html>
