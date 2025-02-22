@@ -255,7 +255,7 @@ cells.forEach((cell, index) => {
 
 // Formata dinheiro
 const formatMoney = () => {
-  return parseFloat(money.textContent.replace(",", "."));
+  return parseFloat(money.textContent.replace(",", ".")).toFixed(2);
 };
 
 // Botão de dobrar valor
@@ -266,7 +266,7 @@ btnDoubleValue.addEventListener("click", () => {
 
   if (newValue > moneyFormated) {
     inputQuantilyMoney.placeholder = "Não ultrapasse seu limite";
-    inputQuantilyMoney.value = moneyFormated.toFixed(2); // Define o máximo possível
+    inputQuantilyMoney.value = moneyFormated; // Define o máximo possível
   } else {
     inputQuantilyMoney.value = newValue.toFixed(2); // Mantém formato de duas casas
   }
@@ -283,10 +283,13 @@ btnHalfValue.addEventListener("click", () => {
 
 // Impede valores acima do saldo
 inputQuantilyMoney.addEventListener("input", (e) => {
+  const value = e.target.value;
+  e.target.value = value.match(/^\d+(\.\d{0,2})?/)?.[0] || "";
   const moneyFormated = formatMoney();
+  console.log(moneyFormated);
   if (parseFloat(e.target.value) > moneyFormated) {
-    inputQuantilyMoney.placeholder = "Não ultrapasse seu limite";
-    e.target.value = moneyFormated.toFixed(2);
+    e.target.value = moneyFormated;
+    console.log(e.target.value);
   }
 });
 
